@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2015 Wandenberg Peixoto <wandenberg@gmail.com>, Rogério Carvalho Schneider <stockrt@gmail.com>
+ * Copyright (C) 2010-2016 Wandenberg Peixoto <wandenberg@gmail.com>, Rogério Carvalho Schneider <stockrt@gmail.com>
  *
  * This file is part of Nginx Push Stream Module.
  *
@@ -68,7 +68,7 @@ ngx_http_push_stream_websocket_handler(ngx_http_request_t *r)
     user_agent = ngx_http_push_stream_get_header(r, &NGX_HTTP_HEADER_USER_AGENT);
 
     if ((upgrade_header == NULL) || (connection_header == NULL) || (sec_key_header == NULL) || (sec_version_header == NULL)) {
-        ngx_log_error(NGX_LOG_ERR, r->connection->log, 0, "push stream module: %V, user_agent %V", &NGX_HTTP_PUSH_STREAM_NO_MANDATORY_HEADERS_MESSAGE, &user_agent);
+        ngx_log_error(NGX_LOG_ERR, r->connection->log, 0, "push stream module: %V, user_agent: %s, version: %s", &NGX_HTTP_PUSH_STREAM_NO_MANDATORY_HEADERS_MESSAGE, user_agent->data, sec_version_header->data);
         return ngx_http_push_stream_send_only_header_response(r, NGX_HTTP_BAD_REQUEST, &NGX_HTTP_PUSH_STREAM_NO_MANDATORY_HEADERS_MESSAGE);
     }
 
