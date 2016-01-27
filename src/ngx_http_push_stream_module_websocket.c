@@ -69,7 +69,11 @@ ngx_http_push_stream_websocket_handler(ngx_http_request_t *r)
 
     if ((upgrade_header == NULL) || (connection_header == NULL) || (sec_key_header == NULL) || (sec_version_header == NULL)) {
         ngx_log_error(NGX_LOG_ERR, r->connection->log, 0, "push stream module: %V, user_agent: %s, key %s, version: %s", &NGX_HTTP_PUSH_STREAM_NO_MANDATORY_HEADERS_MESSAGE, user_agent == NULL ? (void*)"N/A" : user_agent->data, sec_key_header == NULL ? (void*)"N/A" : sec_key_header == NULL ? (void*)"N/A" : sec_key_header->data, sec_version_header == NULL ? (void*)"N/A" : sec_version_header->data);
-        ngx_log_error(NGX_LOG_ERR, r->connection->log, 0, "%x, %x, %x, %x", upgrade_header, connection_header, sec_key_header, sec_version_header);
+        ngx_log_error(NGX_LOG_ERR, r->connection->log, 0, ":%d, %d, %d, %d:",
+                      upgrade_header == NULL ? 0 : upgrade_header->len,
+                      connection_header == NULL ? 0 : connection_header->len,
+                      sec_key_header == NULL ? 0 : sec_key_header->len,
+                      sec_version_header == NULL ? 0 : sec_version_header->len);
         return ngx_http_push_stream_send_only_header_response(r, NGX_HTTP_BAD_REQUEST, &NGX_HTTP_PUSH_STREAM_NO_MANDATORY_HEADERS_MESSAGE);
     }
 
